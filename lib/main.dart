@@ -44,6 +44,7 @@ class MyApp extends StatelessWidget {
                     style: TextStyle(fontSize: 24, fontWeight: FontWeight(800)),
                   ),
                   Expanded(child: globalViewModal.page.sidebar),
+                  NavigationButtons(globalViewModal: globalViewModal),
                 ],
               ),
             ),
@@ -51,5 +52,28 @@ class MyApp extends StatelessWidget {
         ),
       ),
     );
+  }
+}
+
+class NavigationButtons extends StatelessWidget {
+  const NavigationButtons({super.key, required this.globalViewModal});
+
+  final GlobalViewModal globalViewModal;
+
+  @override
+  Widget build(BuildContext context) {
+    List<Widget> buttons = PageNames.values
+        .where((page) => page != globalViewModal.currentPage)
+        .map(
+          (page) => IconButton(
+            onPressed: () => {globalViewModal.currentPage = page},
+            icon: Icon(
+              pageIcons[page],
+            ), // Use the icon property of each PageName
+          ),
+        )
+        .toList();
+
+    return Row(children: buttons);
   }
 }
