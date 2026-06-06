@@ -1,5 +1,5 @@
 import 'package:donotimagine/UI%20layer/components/error_page.dart';
-import 'package:donotimagine/UI%20layer/components/settings/settings_page.dart';
+import 'package:donotimagine/UI%20layer/components/pages/settings/settings_page.dart';
 import 'package:flutter/material.dart';
 
 enum PageNames { settings, main, error }
