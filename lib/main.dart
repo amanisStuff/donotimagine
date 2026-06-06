@@ -1,4 +1,5 @@
 import 'package:donotimagine/UI%20layer/viewmodels/global_view_modal.dart';
+import 'package:donotimagine/UI%20layer/viewmodels/theme_settings_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -7,6 +8,7 @@ void main() {
     MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (context) => GlobalViewModal()),
+        ChangeNotifierProvider(create: (context) => ThemeSettingsViewModel()),
       ],
       child: MyApp(),
     ),
@@ -20,23 +22,27 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     GlobalViewModal globalViewModal = Provider.of<GlobalViewModal>(context);
+    ThemeSettingsViewModel themeSettingsViewModel =
+        Provider.of<ThemeSettingsViewModel>(context);
     return MaterialApp(
       title: 'Flutter Demo',
-      theme: ThemeData(colorScheme: .fromSeed(seedColor: Colors.deepPurple)),
+      themeMode: themeSettingsViewModel.themeMode,
+      theme: ThemeData.from(
+        colorScheme: ColorScheme.light(),
+        useMaterial3: true,
+      ),
+      darkTheme: ThemeData.from(
+        colorScheme: ColorScheme.dark(),
+        textTheme: TextTheme(),
+        useMaterial3: true,
+      ),
       home: Scaffold(
         body: Row(
           children: [
-            // main
-            Expanded(
-              child: Container(
-                color: Colors.blueGrey,
-                child: globalViewModal.page.main,
-              ),
-            ),
-            // side
+            Expanded(child: Container(child: globalViewModal.page.main)),
             Container(
               width: 300,
-              color: Colors.lightBlueAccent,
+              color: Theme.of(context).primaryColor,
               child: Column(
                 children: [
                   Text(
@@ -44,6 +50,7 @@ class MyApp extends StatelessWidget {
                     style: TextStyle(fontSize: 24, fontWeight: FontWeight(800)),
                   ),
                   Expanded(child: globalViewModal.page.sidebar),
+                  NavigationButtons(globalViewModal: globalViewModal),
                 ],
               ),
             ),
@@ -51,5 +58,28 @@ class MyApp extends StatelessWidget {
         ),
       ),
     );
+  }
+}
+
+class NavigationButtons extends StatelessWidget {
+  const NavigationButtons({super.key, required this.globalViewModal});
+
+  final GlobalViewModal globalViewModal;
+
+  @override
+  Widget build(BuildContext context) {
+    List<Widget> buttons = PageNames.values
+        .where((page) => page != globalViewModal.currentPage)
+        .map(
+          (page) => IconButton(
+            onPressed: () => {globalViewModal.currentPage = page},
+            icon: Icon(
+              pageIcons[page],
+            ), // Use the icon property of each PageName
+          ),
+        )
+        .toList();
+
+    return Row(children: buttons);
   }
 }
