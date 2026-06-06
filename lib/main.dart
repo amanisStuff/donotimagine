@@ -1,4 +1,5 @@
 import 'package:donotimagine/UI%20layer/viewmodels/global_view_modal.dart';
+import 'package:donotimagine/UI%20layer/viewmodels/theme_settings_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -7,6 +8,7 @@ void main() {
     MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (context) => GlobalViewModal()),
+        ChangeNotifierProvider(create: (context) => ThemeSettingsViewModel()),
       ],
       child: MyApp(),
     ),
@@ -20,23 +22,27 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     GlobalViewModal globalViewModal = Provider.of<GlobalViewModal>(context);
+    ThemeSettingsViewModel themeSettingsViewModel =
+        Provider.of<ThemeSettingsViewModel>(context);
     return MaterialApp(
       title: 'Flutter Demo',
-      theme: ThemeData(colorScheme: .fromSeed(seedColor: Colors.deepPurple)),
+      themeMode: themeSettingsViewModel.themeMode,
+      theme: ThemeData.from(colorScheme: ColorScheme.light()),
+      darkTheme: ThemeData.from(colorScheme: ColorScheme.dark()),
       home: Scaffold(
         body: Row(
           children: [
             // main
             Expanded(
               child: Container(
-                color: Colors.blueGrey,
+                color: Theme.of(context).canvasColor,
                 child: globalViewModal.page.main,
               ),
             ),
             // side
             Container(
               width: 300,
-              color: Colors.lightBlueAccent,
+              color: Theme.of(context).primaryColor,
               child: Column(
                 children: [
                   Text(
