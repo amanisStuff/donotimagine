@@ -116,7 +116,15 @@ class SettingsCellDouble extends StatelessWidget {
         children: [
           Text(text),
           // a value slider
-          Slider(value: value, onChanged: onChanged, min: 8, max: 24),
+          Expanded(child: SizedBox.shrink()),
+          Text(value.toStringAsFixed(0)),
+          Slider(
+            value: value,
+            onChanged: onChanged,
+            min: 12,
+            max: 18,
+            divisions: 6,
+          ),
         ],
       ),
     );
@@ -126,12 +134,12 @@ class SettingsCellDouble extends StatelessWidget {
 class SettingsCellString extends StatelessWidget {
   final String text;
   final String value;
-  final VoidCallback? onPressed;
+  final Function(String)? onChanged;
   const SettingsCellString({
     super.key,
     required this.text,
     required this.value,
-    this.onPressed,
+    this.onChanged,
   });
   @override
   Widget build(BuildContext context) {
@@ -140,8 +148,11 @@ class SettingsCellString extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Text(text),
-          Text(value),
-          IconButton(onPressed: onPressed, icon: Icon(Icons.edit)),
+          TextField(
+            controller: TextEditingController(text: value),
+            onChanged: onChanged,
+            decoration: InputDecoration(border: InputBorder.none),
+          ),
         ],
       ),
     );
