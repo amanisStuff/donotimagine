@@ -1,4 +1,4 @@
-import 'package:donotimagine/data%20layer/models/theme_settings_model.dart';
+import 'package:donotimagine/data%20layer/models/settings/theme_settings_model.dart';
 import 'package:donotimagine/data%20layer/services/settings_service.dart';
 import 'package:flutter/material.dart';
 
@@ -9,7 +9,7 @@ class ThemeSettingsViewModel extends ChangeNotifier with ThemeSettingsModel {
       ThemeSettingsViewModel._internal();
   factory ThemeSettingsViewModel() => _instance;
   @override
-  bool set({int? fontSize, ThemeMode? themeMode}) {
+  bool set({double? fontSize, ThemeMode? themeMode}) {
     if (super.set(fontSize: fontSize, themeMode: themeMode)) {
       settingsService.saveThemeSettings();
       notifyListeners();
@@ -22,7 +22,6 @@ class ThemeSettingsViewModel extends ChangeNotifier with ThemeSettingsModel {
     ThemeMode newTheme = themeMode == ThemeMode.dark
         ? ThemeMode.light
         : ThemeMode.dark;
-    print("original: $themeMode | new: $newTheme");
     set(themeMode: newTheme);
   }
 }

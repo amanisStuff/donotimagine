@@ -1,10 +1,10 @@
-import 'package:donotimagine/data%20layer/models/settings_model.dart';
+import 'package:donotimagine/data%20layer/models/settings/settings_model.dart';
 import 'package:flutter/material.dart';
 
 mixin class ThemeSettingsModel implements SettingModel {
-  int _fontSize = 16;
+  double _fontSize = 16;
   ThemeMode _themeMode = ThemeMode.dark;
-  int get fontSize => _fontSize;
+  double get fontSize => _fontSize;
   ThemeMode get themeMode => _themeMode;
   static ThemeSettingsModel? _instance;
   factory ThemeSettingsModel() {
@@ -13,7 +13,7 @@ mixin class ThemeSettingsModel implements SettingModel {
   }
   ThemeSettingsModel._internal();
   @override
-  bool set({int? fontSize, ThemeMode? themeMode}) {
+  bool set({double? fontSize, ThemeMode? themeMode}) {
     bool aValueWasModified = false;
     if (fontSize != null) {
       _fontSize = fontSize;

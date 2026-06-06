@@ -27,19 +27,19 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       themeMode: themeSettingsViewModel.themeMode,
-      theme: ThemeData.from(colorScheme: ColorScheme.light()),
-      darkTheme: ThemeData.from(colorScheme: ColorScheme.dark()),
+      theme: ThemeData.from(
+        colorScheme: ColorScheme.light(),
+        useMaterial3: true,
+      ),
+      darkTheme: ThemeData.from(
+        colorScheme: ColorScheme.dark(),
+        textTheme: TextTheme(),
+        useMaterial3: true,
+      ),
       home: Scaffold(
         body: Row(
           children: [
-            // main
-            Expanded(
-              child: Container(
-                color: Theme.of(context).canvasColor,
-                child: globalViewModal.page.main,
-              ),
-            ),
-            // side
+            Expanded(child: Container(child: globalViewModal.page.main)),
             Container(
               width: 300,
               color: Theme.of(context).primaryColor,
