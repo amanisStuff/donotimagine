@@ -1,3 +1,5 @@
+import 'package:donotimagine/UI%20layer/viewmodels/play_change_notifier.dart';
+import 'package:donotimagine/UI%20layer/viewmodels/viewport/viewport.dart';
 import 'package:donotimagine/UI%20layer/viewmodels/global_view_modal.dart';
 import 'package:donotimagine/UI%20layer/viewmodels/theme_settings_view_model.dart';
 import 'package:flutter/material.dart';
@@ -9,6 +11,8 @@ void main() {
       providers: [
         ChangeNotifierProvider(create: (context) => GlobalViewModal()),
         ChangeNotifierProvider(create: (context) => ThemeSettingsViewModel()),
+        ChangeNotifierProvider(create: (context) => DummyViewport()),
+        ChangeNotifierProvider(create: (context) => PlayChangeNotifier()),
       ],
       child: MyApp(),
     ),
