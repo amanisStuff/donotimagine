@@ -8,41 +8,50 @@ class SettingsPage implements AppPage {
   Widget get main => ThemeSettingsPage();
 
   @override
-  Widget get sidebar => ListView(
-    children: [
-      ListTile(
-        leading: Icon(Icons.settings),
-        title: Text("General"),
-        onTap: () {
-          // Navigate to General settings page
-        },
-      ),
-      ListTile(
-        leading: Icon(Icons.palette),
-        title: Text("Appearance"),
-        onTap: () {
-          // Navigate to Appearance settings page
-        },
-      ),
-      ListTile(
-        leading: Icon(Icons.lock),
-        title: Text("Security"),
-        onTap: () {
-          // Navigate to Security settings page
-        },
-      ),
-      ListTile(
-        leading: Icon(Icons.privacy_tip),
-        title: Text("Privacy"),
-        onTap: () {
-          // Navigate to Privacy settings page
-        },
-      ),
-    ],
-  );
+  Widget get sidebar => SideBar();
 
   @override
   String get title => "settings page";
+}
+
+class SideBar extends StatelessWidget {
+  const SideBar({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return ListView(
+      children: [
+        ListTile(
+          leading: Icon(Icons.settings),
+          title: Text("General"),
+          onTap: () {
+            // Navigate to General settings page
+          },
+        ),
+        ListTile(
+          leading: Icon(Icons.palette),
+          title: Text("Appearance"),
+          onTap: () {
+            // Navigate to Appearance settings page
+          },
+        ),
+        ListTile(
+          leading: Icon(Icons.lock),
+          title: Text("Security"),
+          onTap: () {
+            // Navigate to Security settings page
+          },
+        ),
+        ListTile(
+          leading: Icon(Icons.privacy_tip),
+          title: Text("Privacy"),
+          onTap: () {
+            // Navigate to Privacy settings page
+          },
+        ),
+      ],
+    );
+  }
 }
 
 class ThemeSettingsPage extends StatelessWidget {
