@@ -6,25 +6,26 @@ import 'package:provider/provider.dart';
 
 class PlayPage extends AppPage {
   @override
-  // TODO: implement main
   Widget get main {
     return DummyView();
   }
 
   @override
-  // TODO: implement sidebar
-  Widget get sidebar => Consumer2<PlayChangeNotifier, DummyViewport>(
+  Widget get sidebar => Consumer2<PlayChangeNotifier, ImageViewport>(
     builder:
         (
           BuildContext context,
           PlayChangeNotifier playChangeNotifier,
-          DummyViewport dummyViewport,
+          ImageViewport dummyViewport,
           Widget? child,
         ) {
           return PlayControls(
             onNext: dummyViewport.next,
             onPause: dummyViewport.onPause,
-            onPrevious: dummyViewport.previous,
+            onPrevious: () {
+              print("Previous clicked");
+              // dummyViewport.addImageFromUrl("https://picsum.photos/200/300");
+            },
             onplay: () => {},
             progress: .5,
             isPlaying: true,
@@ -42,8 +43,8 @@ class DummyView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    DummyViewport dummyViewport = Provider.of<DummyViewport>(context);
-    return Container(child: dummyViewport.setUpUI());
+    ImageViewport activeViewport = Provider.of<ImageViewport>(context);
+    return Container(child: activeViewport.setUpUI());
   }
 }
 

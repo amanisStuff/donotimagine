@@ -1,4 +1,5 @@
 import 'package:donotimagine/UI%20layer/viewmodels/play_change_notifier.dart';
+import 'package:donotimagine/UI%20layer/viewmodels/viewport/dummy_viewport.dart';
 import 'package:donotimagine/UI%20layer/viewmodels/viewport/viewport.dart';
 import 'package:donotimagine/UI%20layer/viewmodels/global_view_modal.dart';
 import 'package:donotimagine/UI%20layer/viewmodels/theme_settings_view_model.dart';
@@ -13,6 +14,8 @@ void main() {
         ChangeNotifierProvider(create: (context) => ThemeSettingsViewModel()),
         ChangeNotifierProvider(create: (context) => DummyViewport()),
         ChangeNotifierProvider(create: (context) => PlayChangeNotifier()),
+        ChangeNotifierProvider(create: (context) => ImageViewport()),
+        // ImageViewport,
       ],
       child: MyApp(),
     ),
@@ -83,7 +86,6 @@ class NavigationButtons extends StatelessWidget {
           ),
         )
         .toList();
-
     return Row(children: buttons);
   }
 }

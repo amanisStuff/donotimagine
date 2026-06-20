@@ -1,59 +1,84 @@
+import 'dart:io';
+import 'dart:typed_data';
+
 import 'package:flutter/material.dart';
 
-abstract class Viewport {
-  // Basic functionality to interact with the play page as a viewmodel
+abstract class AppViewport {
   Widget setUpUI();
-  void onPlay() {
-    // Handle the play button being pressed
-  }
-
-  void onPause() {
-    // Handle the pause button being pressed
-  }
-
-  void next() {
-    // Handle skipping to the next track
-  }
-
-  void previous() {
-    // Handle skipping to the previous track
-  }
+  void onPlay();
+  void onPause();
+  void next();
+  void previous();
 }
 
-class DummyViewport extends ChangeNotifier implements Viewport {
-  final List<IconData> _icons = [
-    Icons.play_arrow,
-    Icons.pause_circle,
-    Icons.skip_next,
-    Icons.skip_previous,
-  ];
-
+class ImageViewport extends ChangeNotifier implements AppViewport {
+  List<Uint8List> imageData = [];
   int currentIndex = 0;
 
   @override
-  Widget setUpUI() {
-    return Icon(_icons[currentIndex]);
-  }
-
-  @override
-  void onPlay() {
-    // _currentIndex = (_currentIndex + 1) % _icons.length;
+  void next() {
+    // TODO: implement next
   }
 
   @override
   void onPause() {
-    // _currentIndex = (_currentIndex + 1) % _icons.length;
+    // TODO: implement onPause
   }
 
   @override
-  void next() {
-    currentIndex = (currentIndex + 1) % _icons.length;
-    notifyListeners();
+  void onPlay() {
+    // TODO: implement onPlay
   }
 
   @override
   void previous() {
-    currentIndex = (currentIndex - 1) % _icons.length;
-    notifyListeners();
+    // TODO: implement previous
+  }
+
+  @override
+  Widget setUpUI() {
+    // TODO: implement setUpUI
+    return gellery();
+  }
+}
+
+class gellery extends StatelessWidget {
+  const gellery({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: GridView(
+        gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
+          maxCrossAxisExtent: 150,
+          crossAxisSpacing: 8,
+          mainAxisSpacing: 8,
+        ),
+        children: List.generate(
+          15,
+          (index) => Container(
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.all(Radius.circular(15)),
+            ),
+            clipBehavior: Clip.antiAlias,
+            child: index == 14
+                ? InkWell(
+                    onTap: () {
+                      print('Container Clicked via InkWell!');
+                    },
+                    child: MouseRegion(
+                      cursor: SystemMouseCursors.click,
+                      child: Container(
+                        color: Colors.amber,
+                        child: Icon(Icons.image_search, size: 32),
+                      ),
+                    ),
+                  )
+                : Image.network("https://picsum.photos/200") as Widget,
+          ),
+        ),
+      ),
+    );
   }
 }
