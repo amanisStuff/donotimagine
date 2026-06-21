@@ -1,5 +1,5 @@
 import 'package:donotimagine/UI%20layer/viewmodels/play_change_notifier.dart';
-import 'package:donotimagine/UI%20layer/viewmodels/viewport/viewport.dart';
+import 'package:donotimagine/UI%20layer/viewmodels/viewport/Imageviewport/image_viewport.dart';
 import 'package:donotimagine/UI%20layer/viewmodels/global_view_modal.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
