@@ -5,22 +5,36 @@ import 'package:donotimagine/UI%20layer/viewmodels/viewport/viewport.dart';
 import 'package:flutter/material.dart';
 
 class ImageViewport extends ChangeNotifier implements AppViewport {
-  List<Uint8List> imageData = [];
-  int currentIndex = 0;
-
+  List<Uint8List> imageDataList = [];
+  int? _currentIndex;
+  bool displayImage = false;
+  ImageViewport() {
+    imageDataList.isNotEmpty ? _currentIndex = 0 : _currentIndex = null;
+  }
+  int? get currentIndex => _currentIndex;
   @override
   void next() {
-    // TODO: implement next
+    if (_currentIndex != null) {
+      _currentIndex = _currentIndex! + 1 % imageDataList.length;
+    }
+    notifyListeners();
   }
 
   @override
   void onPause() {
     // TODO: implement onPause
+    if (_currentIndex != null) {
+      _currentIndex = _currentIndex! + 1 % imageDataList.length;
+    }
+    displayImage = false;
+    notifyListeners();
   }
 
   @override
   void onPlay() {
     // TODO: implement onPlay
+    displayImage = true;
+    notifyListeners();
   }
 
   @override
@@ -30,8 +44,9 @@ class ImageViewport extends ChangeNotifier implements AppViewport {
 
   @override
   Widget setUpUI() {
-    bool displayImage = true;
     // TODO: implement setUpUI
-    return displayImage ? Imagedisplay() : ImageGellery();
+    return displayImage
+        ? Imagedisplay()
+        : ImageGellery(selectedIndex: _currentIndex);
   }
 }
