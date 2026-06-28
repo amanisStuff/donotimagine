@@ -18,6 +18,7 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import shared.WrapLayout;
 /**
  *
  * @author amani kherraz
@@ -53,8 +54,7 @@ public class ImageViewport extends JPanel{
     }
     public void setCurrentImage(int index){
         currentImageIndex = index % images.length;
-        System.out.println("currentImageIndex : " + currentImageIndex);
-        gallery.setfocus(currentImageIndex);
+        gallery.setfocus(index);
     }
     
     
@@ -78,26 +78,17 @@ class Gallery extends JPanel{
     }
     public void setfocus(int index){
         focused_image = index;
-        System.out.println("focused_image: " + focused_image);
         renderGallery();
     }
     private void renderGallery(){
         this.removeAll();
-        this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-
+        this.setLayout(new WrapLayout(WrapLayout.LEFT));
         for (int i = 0; i < images.length; i++) {
             ImageContainer imageContainer = new ImageContainer();
             imageContainer.setPreferredSize(new Dimension(100,100));
             JLabel imagelabel = new JLabel("this is image number " + images[i]);
             
-            Dimension size = new Dimension(100, 100);
-            imageContainer.setPreferredSize(size);
-            imageContainer.setMaximumSize(size); // This prevents stretching
-            imageContainer.setMinimumSize(size);
-            
             if (i == focused_image) {
-                System.out.println("focused_image: " + focused_image + " i :"+i);
-
                 imagelabel.setForeground(Color.red);
             }
             imageContainer.add(imagelabel);
