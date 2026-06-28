@@ -51,9 +51,6 @@ public class ImageViewportProvider implements ViewportProvider{
     };
     @Override
     public JComponent getViewport() {
-        JScrollPane sp = new JScrollPane(viewport);
-        sp.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-        sp.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
-        return sp;
+        return viewport;
     }
 }
