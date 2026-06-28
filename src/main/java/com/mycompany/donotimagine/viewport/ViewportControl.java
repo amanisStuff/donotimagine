@@ -2,7 +2,8 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package com.mycompany.donotimagine;
+package com.mycompany.donotimagine.viewport;
+import com.mycompany.donotimagine.viewport.ViewportControlType;
 import java.util.logging.Logger;
 
 /**
@@ -10,9 +11,9 @@ import java.util.logging.Logger;
  * @author amani kherraz
  */
 public class ViewportControl {
-    private String title;
-    private String iconPath;
-    private ViewportControlType type;
+    private final String title;
+    private final String iconPath;
+    private final ViewportControlType type;
     private String[] options;
 
     private static final Logger logger = Logger.getLogger(ViewportControl.class.getName());

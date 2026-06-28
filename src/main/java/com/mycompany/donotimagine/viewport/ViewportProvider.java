@@ -4,7 +4,6 @@
  */
 package com.mycompany.donotimagine.viewport;
 
-import com.mycompany.donotimagine.ViewportControl;
 import java.util.HashMap;
 import java.util.function.Consumer;
 import javax.swing.JPanel;

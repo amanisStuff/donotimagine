@@ -1,7 +1,7 @@
-com/mycompany/donotimagine/ViewportControl.class
-com/mycompany/donotimagine/viewport/imageviewport/ImageViewportProvider.class
-com/mycompany/donotimagine/ViewportControlType.class
-com/mycompany/donotimagine/viewport/ViewportProvider.class
-com/mycompany/donotimagine/viewport/imageviewport/ImageViewport.class
-com/mycompany/donotimagine/DoNotImagine.class
-com/mycompany/donotimagine/viewport/imageviewport/ImageContainer.class
+com\mycompany\donotimagine\viewport\imageviewport\ImageViewport.class
+com\mycompany\donotimagine\viewport\imageviewport\ImageViewportProvider.class
+com\mycompany\donotimagine\viewport\ViewportControlType.class
+com\mycompany\donotimagine\viewport\ViewportControl.class
+com\mycompany\donotimagine\DoNotImagine.class
+com\mycompany\donotimagine\viewport\imageviewport\ImageContainer.class
+com\mycompany\donotimagine\viewport\ViewportProvider.class

@@ -4,7 +4,7 @@
  */
 package com.mycompany.donotimagine.viewport.imageviewport;
 
-import com.mycompany.donotimagine.ViewportControl;
+import com.mycompany.donotimagine.viewport.ViewportControl;
 import com.mycompany.donotimagine.viewport.ViewportProvider;
 import java.util.ArrayList;
 import java.util.HashMap;
