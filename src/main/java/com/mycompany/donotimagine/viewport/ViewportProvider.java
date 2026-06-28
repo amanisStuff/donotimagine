@@ -6,6 +6,7 @@ package com.mycompany.donotimagine.viewport;
 
 import java.util.HashMap;
 import java.util.function.Consumer;
+import javax.swing.JComponent;
 import javax.swing.JPanel;
 
 /**
@@ -24,7 +25,7 @@ public interface ViewportProvider {
      * @since 0.0
      */
     HashMap<ViewportControl, Consumer> getControls();
-    JPanel getViewport();
+    JComponent getViewport();
     
 }
 

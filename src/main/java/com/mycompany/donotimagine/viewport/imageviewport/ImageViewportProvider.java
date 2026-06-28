@@ -10,7 +10,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.function.Consumer;
 import javax.swing.JPanel;
-import com.mycompany.donotimagine.viewport.imageviewport.ImageViewport;
+import javax.swing.JComponent;
+import javax.swing.JScrollPane;
 
 /**
  *
@@ -49,9 +50,10 @@ public class ImageViewportProvider implements ViewportProvider{
         return controls;
     };
     @Override
-    public JPanel getViewport() {
-        return viewport;
+    public JComponent getViewport() {
+        JScrollPane sp = new JScrollPane(viewport);
+        sp.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+        sp.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+        return sp;
     }
-    
-    
 }
