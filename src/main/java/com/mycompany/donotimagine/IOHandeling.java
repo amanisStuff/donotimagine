@@ -25,27 +25,30 @@ public class IOHandeling {
         ASSET
     };
 
-    static Image loadImage(String source, imageOptions imageOption) throws IOException, AssertionError {
+    static BufferedImage loadImage(String source, imageOptions imageOption) throws IOException, AssertionError {
         BufferedImage loaded;
         switch (imageOption) {
-            case ASSET:
+            case ASSET -> {
                 InputStream is = Image.class.getResourceAsStream("/images/logo.png");
-                BufferedImage imgFromResource = ImageIO.read(is);
-                break;
-            case SYSTEM:
+                loaded = ImageIO.read(is);
+            }
+            case SYSTEM ->
                 loaded = ImageIO.read(new File(source));
-                break;
-            case WEB:
+            case WEB ->
                 loaded = ImageIO.read(new URL("https://example.com"));
-                break;
-            default:
+            default ->
                 throw new AssertionError();
         }
-        return ImageIO.read(new File(source));
+        return loaded;
     }
 
-    static public void saveImage(Image image) {
+    static public void saveImage(BufferedImage image, String location, String format) throws IOException {
+        File outputFile = new File(location + "." + format);
 
+        boolean success = ImageIO.write(image, format, outputFile);
+        if (!success) {
+            throw new Error("failed to save image to location");
+        }
     }
 
 }
