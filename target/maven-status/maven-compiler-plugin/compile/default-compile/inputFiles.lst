@@ -1,7 +1,4 @@
 B:\donotimagine\src\main\java\com\mycompany\donotimagine\DoNotImagine.java
-B:\donotimagine\src\main\java\com\mycompany\donotimagine\viewport\imageviewport\ImageViewport.java
-B:\donotimagine\src\main\java\com\mycompany\donotimagine\viewport\imageviewport\ImageViewportProvider.java
-B:\donotimagine\src\main\java\com\mycompany\donotimagine\viewport\ViewportControl.java
-B:\donotimagine\src\main\java\com\mycompany\donotimagine\viewport\ViewportControlType.java
-B:\donotimagine\src\main\java\com\mycompany\donotimagine\viewport\ViewportProvider.java
+B:\donotimagine\src\main\java\com\mycompany\donotimagine\IOHandeling.java
 B:\donotimagine\src\main\java\shared\WrapLayout.java
+B:\donotimagine\src\main\java\UI\elements\ControlPanel.java

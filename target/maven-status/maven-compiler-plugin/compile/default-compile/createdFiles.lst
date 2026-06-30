@@ -1,4 +1,5 @@
-com\mycompany\donotimagine\viewport\ViewportControlType.class
-com\mycompany\donotimagine\viewport\ViewportControl.class
+com\mycompany\donotimagine\IOHandeling.class
+com\mycompany\donotimagine\IOHandeling$imageOptions.class
+UI\elements\ControlPanel.class
 shared\WrapLayout.class
-com\mycompany\donotimagine\viewport\imageviewport\Gallery.class
+UI\elements\ControlPanel$1.class
