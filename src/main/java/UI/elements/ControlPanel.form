@@ -189,7 +189,7 @@
     </Component>
     <Component class="javax.swing.JButton" name="nextButton">
       <Properties>
-        <Property name="text" type="java.lang.String" value="&#x27a4;|"/>
+        <Property name="text" type="java.lang.String" value="&#x2b9e;|"/>
         <Property name="toolTipText" type="java.lang.String" value="next"/>
         <Property name="actionCommand" type="java.lang.String" value="&#x27a4;"/>
       </Properties>

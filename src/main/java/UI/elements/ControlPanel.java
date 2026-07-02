@@ -80,7 +80,7 @@ public class ControlPanel extends javax.swing.JPanel {
         playButton.setToolTipText("play/pause");
         playButton.addActionListener(this::playButtonActionPerformed);
 
-        nextButton.setText("➤|");
+        nextButton.setText("⮞|");
         nextButton.setToolTipText("next");
         nextButton.setActionCommand("➤");
         nextButton.addActionListener(this::nextButtonActionPerformed);

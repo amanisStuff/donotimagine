@@ -1,6 +1,7 @@
+com\mycompany\donotimagine\ImageScreen.class
 com\mycompany\donotimagine\IOHandeling.class
 com\mycompany\donotimagine\IOHandeling$imageOptions.class
 UI\elements\ControlPanel.class
-UI\elements\imageViewport.class
+com\mycompany\donotimagine\mainWindow.class
 shared\WrapLayout.class
 UI\elements\ControlPanel$1.class

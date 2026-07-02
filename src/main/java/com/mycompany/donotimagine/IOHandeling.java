@@ -10,8 +10,8 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
+
 import javax.imageio.ImageIO;
-import org.xml.sax.InputSource;
 
 /**
  *
@@ -25,7 +25,7 @@ public class IOHandeling {
         ASSET
     };
 
-    static BufferedImage loadImage(String source, imageOptions imageOption) throws IOException, AssertionError {
+    public static BufferedImage loadImage(String source, imageOptions imageOption) throws IOException, AssertionError {
         BufferedImage loaded;
         switch (imageOption) {
             case ASSET -> {
@@ -42,7 +42,7 @@ public class IOHandeling {
         return loaded;
     }
 
-    static public void saveImage(BufferedImage image, String location, String format) throws IOException {
+    public static void saveImage(BufferedImage image, String location, String format) throws IOException {
         File outputFile = new File(location + "." + format);
 
         boolean success = ImageIO.write(image, format, outputFile);
