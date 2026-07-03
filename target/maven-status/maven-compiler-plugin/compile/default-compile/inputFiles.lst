@@ -1,5 +1,8 @@
-B:\donotimagine\src\main\java\com\mycompany\donotimagine\DoNotImagine.java
-B:\donotimagine\src\main\java\com\mycompany\donotimagine\ImageScreen.java
-B:\donotimagine\src\main\java\com\mycompany\donotimagine\IOHandeling.java
-B:\donotimagine\src\main\java\shared\WrapLayout.java
-B:\donotimagine\src\main\java\UI\elements\ControlPanel.java
+/home/gool/NetBeansProjects/DoNotImagine/src/main/java/UI/elements/ControlPanel.java
+/home/gool/NetBeansProjects/DoNotImagine/src/main/java/UI/elements/Controllers/ImageVieportController.java
+/home/gool/NetBeansProjects/DoNotImagine/src/main/java/UI/elements/Controllers/ViewportController.java
+/home/gool/NetBeansProjects/DoNotImagine/src/main/java/com/mycompany/donotimagine/DoNotImagine.java
+/home/gool/NetBeansProjects/DoNotImagine/src/main/java/com/mycompany/donotimagine/IOHandeling.java
+/home/gool/NetBeansProjects/DoNotImagine/src/main/java/com/mycompany/donotimagine/ImageScreen.java
+/home/gool/NetBeansProjects/DoNotImagine/src/main/java/com/mycompany/donotimagine/MainWindow.java
+/home/gool/NetBeansProjects/DoNotImagine/src/main/java/shared/WrapLayout.java

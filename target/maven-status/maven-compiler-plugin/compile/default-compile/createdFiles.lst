@@ -1,7 +1,6 @@
-com\mycompany\donotimagine\ImageScreen.class
-com\mycompany\donotimagine\IOHandeling.class
-com\mycompany\donotimagine\IOHandeling$imageOptions.class
-UI\elements\ControlPanel.class
-com\mycompany\donotimagine\mainWindow.class
-shared\WrapLayout.class
-UI\elements\ControlPanel$1.class
+com/mycompany/donotimagine/MainWindow.class
+UI/elements/Controllers/ImageVieportController.class
+com/mycompany/donotimagine/CounterDowner.class
+UI/elements/Controllers/ViewportController.class
+com/mycompany/donotimagine/CounterDowner$1.class
+com/mycompany/donotimagine/ImageScreen.class
