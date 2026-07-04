@@ -12,6 +12,7 @@ import java.awt.Dimension;
 import java.awt.HeadlessException;
 import javax.swing.JFrame;
 import java.util.Arrays;
+import javax.swing.SwingUtilities;
 
 /**
  *
@@ -19,12 +20,92 @@ import java.util.Arrays;
  */
 public class MainWindow extends JFrame {
 
-    ViewportController viewportController = new ImageVieportController();
-    ControlPanel cp = new ControlPanel();
-    int selectedDurationIndex = 0;
-    int[] durationOptions = {10, 30, 60, 120, 300};
-    boolean isPlaying = false;
+    // --- Attributes ---
+    private final ViewportController viewportController = new ImageVieportController();
+    private final ControlPanel cp = new ControlPanel();
+    private CounterDowner counter; // Now a field so all actions can see it
 
+    private int selectedDurationIndex = 0;
+    private final int[] durationOptions = {10, 30, 60, 120, 300};
+    private boolean isPlaying = false;
+
+    // --- Action Attributes ---
+    private final Runnable playAction = () -> {
+        isPlaying = true;
+        counter.start();
+    };
+
+    private final Runnable pauseAction = () -> {
+        isPlaying = false;
+        counter.pause();
+    };
+
+    private final Runnable nextAction = () -> {
+        viewportController.next();
+        handleNavigation();
+    };
+
+    private final Runnable prevAction = () -> {
+        viewportController.previous();
+        handleNavigation();
+    };
+
+    // --- Constructor ---
+    public MainWindow() throws HeadlessException {
+        // Assume initComponents() exists here if using a GUI Builder
+        // initComponents();
+
+        this.counter = new CounterDowner(durationOptions[selectedDurationIndex]);
+
+        setupControllerLogic();
+        setupControlPanelActions();
+
+        // Final Layout
+        this.setLayout(new BorderLayout());
+        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.add(cp, BorderLayout.EAST);
+        this.add(viewportController.getPanel(), BorderLayout.CENTER);
+        this.setMinimumSize(new Dimension(500, 500));
+    }
+
+    // --- Setup Methods ---
+    private void setupControlPanelActions() {
+        cp.setPlayButtonAction(playAction);
+        cp.setPauseButtonAction(pauseAction);
+        cp.setNextButtonAction(nextAction);
+        cp.setPrevButtonAction(prevAction);
+        cp.setDurationOptions(durationOptionsText());
+        cp.setTimeLabeText("00m 00s");
+
+        cp.setPickDurationOptionAction((index) -> {
+            counter.setDuration(durationOptions[index]);
+            this.selectedDurationIndex = index;
+            cp.setProgress(100);
+            cp.setTimeLabeText(DurationToText(durationOptions[index]));
+        });
+    }
+
+    private void setupControllerLogic() {
+        counter.setEndOfCountDownTask(viewportController::next);
+
+        counter.setCounterTask((remainingTime) -> {
+            SwingUtilities.invokeLater(() -> {
+                cp.setTimeLabeText(DurationToText(remainingTime));
+                cp.setProgress(calcProgress(remainingTime));
+            });
+        });
+    }
+
+    private void handleNavigation() {
+        counter.stop();
+        if (isPlaying) {
+            counter.start();
+        }
+        cp.setProgress(100);
+        cp.setTimeLabeText(DurationToText(durationOptions[selectedDurationIndex]));
+    }
+
+    // --- Helpers ---
     private String[] durationOptionsText() {
         return Arrays.stream(durationOptions)
                 .mapToObj(this::DurationToText)
@@ -32,65 +113,10 @@ public class MainWindow extends JFrame {
     }
 
     private int calcProgress(int remainingTime) {
-        float progress = (float) remainingTime / durationOptions[selectedDurationIndex] * 100;
-        return (int) progress;
+        return (int) ((float) remainingTime / durationOptions[selectedDurationIndex] * 100);
     }
 
     private String DurationToText(int duration) {
         return String.format("%02dm %02ds", duration / 60, duration % 60);
     }
-
-    public MainWindow() throws HeadlessException {
-
-        CounterDowner counter = new CounterDowner(3);
-        counter.setEndOfCountDownTask(() -> {
-            viewportController.next();
-        });
-        counter.setDuration(durationOptions[selectedDurationIndex]);
-        cp.setTimeLabeText("00m 00s");
-        cp.setDurationOptions(durationOptionsText());
-        cp.setFullscreenButtonAction(() -> System.out.println("fullscreen not implemented yet"));
-        cp.setSaveButtonAction(() -> System.out.println("save not implemented yet"));
-        cp.setLoadButtonAction(() -> System.out.println("load not implemented yet"));
-        cp.setPlayButtonAction(() -> {
-            isPlaying = true;
-            counter.start();
-        });
-        cp.setPauseButtonAction(() -> {
-            isPlaying = false;
-            counter.pause();
-        });
-        cp.setNextButtonAction(() -> {
-            viewportController.next();
-            counter.stop();
-            if (isPlaying) {
-                counter.start();
-            }
-        });
-        cp.setPrevButtonAction(() -> {
-            viewportController.previous();
-            counter.stop();
-            if (isPlaying) {
-                counter.start();
-            }
-        });
-
-        cp.setPickDurationOptionAction((index) -> {
-            counter.setDuration(durationOptions[index]);
-            this.selectedDurationIndex = index;
-        });
-        counter.setCounterTask((remainingTime) -> {
-            String timeLabelText = DurationToText(remainingTime);
-            cp.setTimeLabeText(timeLabelText);
-            cp.setProgress(calcProgress(remainingTime));
-        });
-
-        this.setLayout(new BorderLayout());
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.add(cp, BorderLayout.EAST);
-        ImageScreen screen = new ImageScreen();
-        this.add(screen, BorderLayout.CENTER);
-        this.setMinimumSize(new Dimension(500, 500));
-    }
-
 }
