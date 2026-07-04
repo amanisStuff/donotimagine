@@ -161,14 +161,8 @@
     </Component>
     <Component class="javax.swing.JComboBox" name="durrationsDropDown">
       <Properties>
-        <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-          <StringArray count="5">
-            <StringItem index="0" value="30 seconds"/>
-            <StringItem index="1" value="1 minute"/>
-            <StringItem index="2" value="2 minutes"/>
-            <StringItem index="3" value="5 minutes"/>
-            <StringItem index="4" value="25 minutes"/>
-          </StringArray>
+        <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+          <Connection component="durrationsDropDown" name="model" type="property"/>
         </Property>
       </Properties>
       <Events>
@@ -253,6 +247,9 @@
         <Property name="text" type="java.lang.String" value="&#x26f6;"/>
         <Property name="toolTipText" type="java.lang.String" value="fullscreen"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="fullscreenButtonActionPerformed"/>
+      </Events>
     </Component>
   </SubComponents>
 </Form>

@@ -1,6 +1,8 @@
-com/mycompany/donotimagine/MainWindow.class
+interfaces/IOHandeling$imageOptions.class
+UI/elements/MainWindow.class
 UI/elements/Controllers/ImageVieportController.class
+UI/elements/ImageScreen.class
 com/mycompany/donotimagine/CounterDowner.class
 UI/elements/Controllers/ViewportController.class
+interfaces/IOHandeling.class
 com/mycompany/donotimagine/CounterDowner$1.class
-com/mycompany/donotimagine/ImageScreen.class

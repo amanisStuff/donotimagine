@@ -4,8 +4,6 @@
  */
 package UI.elements;
 
-import UI.elements.ImageScreen;
-import UI.elements.ControlPanel;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.HeadlessException;
@@ -16,15 +14,16 @@ import javax.swing.JFrame;
  * @author gool
  */
 public class MainWindow extends JFrame {
+
     public MainWindow() throws HeadlessException {
         ControlPanel cp = new ControlPanel();
+        String[] durationoptions = {"a", "b", "c"};
+        cp.setDurationOptions(durationoptions);
         this.setLayout(new BorderLayout());
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.add(cp, BorderLayout.EAST);
         ImageScreen screen = new ImageScreen();
-        screen.setSize(500, 500);
         this.add(screen, BorderLayout.CENTER);
         this.setMinimumSize(new Dimension(500, 500));
     }
 }
-
