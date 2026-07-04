@@ -76,7 +76,6 @@ public class MainWindow extends JFrame {
         cp.setPrevButtonAction(prevAction);
         cp.setDurationOptions(durationOptionsText());
         cp.setTimeLabeText("00m 00s");
-
         cp.setPickDurationOptionAction((index) -> {
             counter.setDuration(durationOptions[index]);
             this.selectedDurationIndex = index;

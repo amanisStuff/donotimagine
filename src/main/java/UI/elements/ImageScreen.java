@@ -17,6 +17,7 @@ public class ImageScreen extends JPanel {
 
     public void setImage(BufferedImage image) {
         this.image = image;
+        this.repaint();
     }
 
     private void drawStringAtCenter(Graphics2D g2d, String string) {

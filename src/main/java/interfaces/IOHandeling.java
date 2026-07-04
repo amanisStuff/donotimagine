@@ -29,13 +29,13 @@ public class IOHandeling {
         BufferedImage loaded;
         switch (imageOption) {
             case ASSET -> {
-                InputStream is = Image.class.getResourceAsStream("/images/logo.png");
+                InputStream is = Image.class.getResourceAsStream(source);
                 loaded = ImageIO.read(is);
             }
             case SYSTEM ->
                 loaded = ImageIO.read(new File(source));
             case WEB ->
-                loaded = ImageIO.read(new URL("https://example.com"));
+                loaded = ImageIO.read(new URL(source));
             default ->
                 throw new AssertionError();
         }
