@@ -6,7 +6,9 @@ package com.mycompany.donotimagine;
 
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
+import java.util.function.Consumer;
 
 /**
  *
@@ -14,55 +16,68 @@ import java.util.concurrent.TimeUnit;
  */
 public class CounterDowner {
 
-    private ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
+    private final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
+    private ScheduledFuture<?> scheduledFuture;
+
     private Runnable endOfCountDownTask;
     private int durationInSeconds;
     private int remainingTimeInSeconds;
-    private Runnable countdownTask = new Runnable() {
-        @Override
-        public void run() {
-            if (remainingTimeInSeconds > 0) {
-                System.out.println("Time left: "
-                        + remainingTimeInSeconds % 60
-                        + " seconds  and "
-                        + remainingTimeInSeconds / 60 + " minutes");
-                remainingTimeInSeconds--;
-            } else {
-                remainingTimeInSeconds = durationInSeconds;
-                endOfCountDownTask.run();
-            }
+
+    private Consumer<Integer> counterTaskConsumer = (remainingTime) -> {
+        System.out.println("Time left: " + (remainingTime / 60) + "m " + (remainingTime % 60) + "s");
+    };
+
+    // Define the logic as a Runnable
+    private final Runnable countdownTaskLogic = () -> {
+        if (remainingTimeInSeconds > 0) {
+            counterTaskConsumer.accept(remainingTimeInSeconds);
+            remainingTimeInSeconds--;
+        } else {
+            counterTaskConsumer.accept(0);
+            remainingTimeInSeconds = durationInSeconds;
+            endOfCountDownTask.run();
         }
     };
 
     public CounterDowner(int durationInSeconds) {
         this.durationInSeconds = durationInSeconds;
         this.remainingTimeInSeconds = durationInSeconds;
-        this.endOfCountDownTask = () -> {
-            System.out.println("please set up your endOfCountDownTask by using intance.setendOfCountDownTask ");
-        };
+        this.endOfCountDownTask = () -> System.out.println("Countdown finished!");
+    }
+
+    public void start() {
+        // Only start if not already running
+        if (scheduledFuture == null || scheduledFuture.isCancelled() || scheduledFuture.isDone()) {
+            scheduledFuture = scheduler.scheduleAtFixedRate(countdownTaskLogic, 0, 1, TimeUnit.SECONDS);
+        }
+    }
+
+    public void pause() {
+        if (scheduledFuture != null) {
+            scheduledFuture.cancel(false);
+        }
+    }
+
+    public void stop() {
+        pause();
+        remainingTimeInSeconds = durationInSeconds;
+    }
+
+    public void setCounterTask(Consumer<Integer> counterTaskConsumer) {
+        this.counterTaskConsumer = counterTaskConsumer;
     }
 
     public void setEndOfCountDownTask(Runnable endOfCountDownTask) {
         this.endOfCountDownTask = endOfCountDownTask;
     }
 
-    public void start() {
-        scheduler.scheduleAtFixedRate(countdownTask, 0, 1, TimeUnit.SECONDS);
-
-    }
-
-    public void pause() {
-        scheduler.close();
-    }
-
-    public void stop() {
-        scheduler.close();
-        remainingTimeInSeconds = durationInSeconds;
-    }
-
     public void setDuration(int duration) {
-        durationInSeconds = duration;
-        remainingTimeInSeconds = durationInSeconds;
+        this.durationInSeconds = duration;
+        this.remainingTimeInSeconds = duration;
     }
 
+    // Call this when your application shuts down to clean up the thread pool
+    public void shutdown() {
+        scheduler.shutdown();
+    }
 }

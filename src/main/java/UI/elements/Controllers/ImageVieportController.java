@@ -20,12 +20,18 @@ public class ImageVieportController implements ViewportController {
 
     @Override
     public void next() {
+        if (images == null) {
+            return;
+        }
         currentImage = (currentImage + 1) % images.length;
         imageScreen.setImage(images[currentImage]);
     }
 
     @Override
     public void previous() {
+        if (images == null) {
+            return;
+        }
         currentImage = (currentImage - 1) % images.length;
         imageScreen.setImage(images[currentImage]);
     }

@@ -31,6 +31,19 @@ public class ControlPanel extends javax.swing.JPanel {
     private Consumer<Integer> pickDurationOptionAction = (i) -> {
     };
     private String[] durationOptions = {};
+    private int progress = 0;
+    private String timeLabeText = "time Label";
+
+    public void setTimeLabeText(String timeLabeText) {
+        this.timeLabeText = timeLabeText;
+        timeLabel.setText(timeLabeText);
+    }
+
+    public void setProgress(int progress) {
+        this.progress = progress % 101;
+        progressBar.setValue(progress % 101);
+
+    }
 
     public void setPickDurationOptionAction(Consumer<Integer> pickDurationOptionAction) {
         this.pickDurationOptionAction = pickDurationOptionAction;
@@ -75,7 +88,8 @@ public class ControlPanel extends javax.swing.JPanel {
     public ControlPanel() {
         initComponents();
         durrationsDropDown.setModel(new DefaultComboBoxModel<>(durationOptions));
-//        durrationsDropDown.setModel(new );
+        progressBar.setValue(progress);
+        timeLabel.setText(timeLabeText);
     }
 
     /**
@@ -96,13 +110,13 @@ public class ControlPanel extends javax.swing.JPanel {
         jList1 = new javax.swing.JList<>();
         countdownMode = new javax.swing.JToggleButton();
         jCheckBoxMenuItem1 = new javax.swing.JCheckBoxMenuItem();
-        jProgressBar1 = new javax.swing.JProgressBar();
+        progressBar = new javax.swing.JProgressBar();
         durrationsDropDown = new javax.swing.JComboBox<>();
         playButton = new javax.swing.JButton();
         nextButton = new javax.swing.JButton();
         prevButton = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jLabel1 = new javax.swing.JLabel();
+        timeLabel = new javax.swing.JLabel();
         modeButton = new javax.swing.JToggleButton();
         jLabel2 = new javax.swing.JLabel();
         saveButton = new javax.swing.JButton();
@@ -151,7 +165,7 @@ public class ControlPanel extends javax.swing.JPanel {
         prevButton.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         prevButton.addActionListener(this::prevButtonActionPerformed);
 
-        jLabel1.setText("0m 0s");
+        timeLabel.setText("0m 0s");
 
         modeButton.setText("mode");
 
@@ -181,9 +195,9 @@ public class ControlPanel extends javax.swing.JPanel {
                         .addComponent(playButton, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(nextButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addComponent(jProgressBar1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(progressBar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(timeLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(durrationsDropDown, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -203,11 +217,11 @@ public class ControlPanel extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addGap(9, 9, 9)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(modeButton, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(durrationsDropDown, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel1))
+                    .addComponent(modeButton, javax.swing.GroupLayout.DEFAULT_SIZE, 23, Short.MAX_VALUE)
+                    .addComponent(durrationsDropDown, javax.swing.GroupLayout.DEFAULT_SIZE, 23, Short.MAX_VALUE)
+                    .addComponent(timeLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jProgressBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 12, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(progressBar, javax.swing.GroupLayout.PREFERRED_SIZE, 12, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(playButton)
@@ -225,7 +239,7 @@ public class ControlPanel extends javax.swing.JPanel {
                 .addContainerGap())
         );
 
-        jLabel1.getAccessibleContext().setAccessibleName("zeaze");
+        timeLabel.getAccessibleContext().setAccessibleName("zeaze");
     }// </editor-fold>//GEN-END:initComponents
 
     private void countdownModeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_countdownModeActionPerformed
@@ -282,13 +296,11 @@ public class ControlPanel extends javax.swing.JPanel {
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton6;
     private javax.swing.JCheckBoxMenuItem jCheckBoxMenuItem1;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JList<String> jList1;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;
-    private javax.swing.JProgressBar jProgressBar1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JButton loadButton;
@@ -296,6 +308,8 @@ public class ControlPanel extends javax.swing.JPanel {
     private javax.swing.JButton nextButton;
     private javax.swing.JButton playButton;
     private javax.swing.JButton prevButton;
+    private javax.swing.JProgressBar progressBar;
     private javax.swing.JButton saveButton;
+    private javax.swing.JLabel timeLabel;
     // End of variables declaration//GEN-END:variables
 }

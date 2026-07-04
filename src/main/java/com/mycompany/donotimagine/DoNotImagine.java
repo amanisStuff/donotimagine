@@ -11,11 +11,7 @@ public class DoNotImagine {
         // use the ui elements called ControlPanel
         MainWindow mw = new MainWindow();
         mw.setVisible(true);
-        CounterDowner counter = new CounterDowner(3);
-        counter.start();
-        counter.setEndOfCountDownTask(() -> {
-            System.out.println("user set end of task");
-        });
+
     }
 
 }
