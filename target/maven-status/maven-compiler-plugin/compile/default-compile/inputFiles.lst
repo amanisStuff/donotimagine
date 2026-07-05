@@ -1,6 +1,7 @@
 /home/gool/NetBeansProjects/DoNotImagine/src/main/java/UI/elements/ControlPanel.java
-/home/gool/NetBeansProjects/DoNotImagine/src/main/java/UI/elements/Controllers/ImageVieportController.java
+/home/gool/NetBeansProjects/DoNotImagine/src/main/java/UI/elements/Controllers/ImageViewportController.java
 /home/gool/NetBeansProjects/DoNotImagine/src/main/java/UI/elements/Controllers/ViewportController.java
+/home/gool/NetBeansProjects/DoNotImagine/src/main/java/UI/elements/ImageGallery.java
 /home/gool/NetBeansProjects/DoNotImagine/src/main/java/UI/elements/ImageScreen.java
 /home/gool/NetBeansProjects/DoNotImagine/src/main/java/UI/elements/MainWindow.java
 /home/gool/NetBeansProjects/DoNotImagine/src/main/java/com/mycompany/donotimagine/CounterDowner.java

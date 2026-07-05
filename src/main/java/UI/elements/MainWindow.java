@@ -4,7 +4,7 @@
  */
 package UI.elements;
 
-import UI.elements.Controllers.ImageVieportController;
+import UI.elements.Controllers.ImageViewportController;
 import UI.elements.Controllers.ViewportController;
 import com.mycompany.donotimagine.CounterDowner;
 import java.awt.BorderLayout;
@@ -21,7 +21,7 @@ import javax.swing.SwingUtilities;
 public class MainWindow extends JFrame {
 
     // --- Attributes ---
-    private final ViewportController viewportController = new ImageVieportController();
+    private final ViewportController viewportController = new ImageViewportController();
     private final ControlPanel cp = new ControlPanel();
     private CounterDowner counter; // Now a field so all actions can see it
 
