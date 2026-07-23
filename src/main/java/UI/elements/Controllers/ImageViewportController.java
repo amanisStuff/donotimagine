@@ -7,6 +7,7 @@ package UI.elements.Controllers;
 import UI.elements.ImageGallery;
 import UI.elements.ImageScreen;
 import interfaces.IOHandeling;
+import java.awt.BorderLayout;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -23,18 +24,41 @@ public class ImageViewportController implements ViewportController {
     private List<BufferedImage> images = new ArrayList<BufferedImage>();
     private ImageGallery imageGallery;
     private int currentImage = -1;
+    private JPanel current_view;
 
     public ImageViewportController() {
+        addImageFromWebLink("https://picsum.photos/200/300");
+        addImageFromWebLink("https://picsum.photos/250/300");
+        addImageFromWebLink("https://picsum.photos/250/200");
+        addImageFromWebLink("https://picsum.photos/250/100");
+        addImageFromWebLink("https://picsum.photos/250/200");
 
-        addImageFromWebLink("https://assets.bucketlistly.blog/sites/5adf778b6eabcc00190b75b1/assets/6075182186d092000b192cee/best-free-travel-images-image-2.jpg");
-        addImageFromWebLink("https://thumbs.dreamstime.com/b/beautiful-rain-forest-ang-ka-nature-trail-doi-inthanon-national-park-thailand-36703721.jpg");
+        current_view = new JPanel(new BorderLayout());
         imageGallery = new ImageGallery(images);
+        current_view.add(imageGallery);
+
         if (!images.isEmpty()) {
             currentImage = 0;
             imageScreen.setImage(images.get(currentImage));
         } else {
             currentImage = -1;
         }
+
+    }
+
+    @Override
+    public void play() {
+        current_view.remove(imageGallery);
+        current_view.add(imageScreen);
+        current_view.repaint();
+
+    }
+
+    @Override
+    public void pause() {
+        current_view.add(imageGallery);
+        current_view.remove(imageScreen);
+        current_view.repaint();
 
     }
 
@@ -59,7 +83,7 @@ public class ImageViewportController implements ViewportController {
 
     @Override
     public JPanel getPanel() {
-        return imageGallery;
+        return current_view;
     }
 
     public void addImage(BufferedImage newImage) {

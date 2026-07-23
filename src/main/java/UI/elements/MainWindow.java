@@ -32,11 +32,13 @@ public class MainWindow extends JFrame {
     // --- Action Attributes ---
     private final Runnable playAction = () -> {
         isPlaying = true;
+        viewportController.play();
         counter.start();
     };
 
     private final Runnable pauseAction = () -> {
         isPlaying = false;
+        viewportController.pause();
         counter.pause();
     };
 
@@ -52,20 +54,15 @@ public class MainWindow extends JFrame {
 
     // --- Constructor ---
     public MainWindow() throws HeadlessException {
-        // Assume initComponents() exists here if using a GUI Builder
-        // initComponents();
-
         this.counter = new CounterDowner(durationOptions[selectedDurationIndex]);
-
         setupControllerLogic();
         setupControlPanelActions();
-
-        // Final Layout
         this.setLayout(new BorderLayout());
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.add(cp, BorderLayout.EAST);
         this.add(viewportController.getPanel(), BorderLayout.CENTER);
         this.setMinimumSize(new Dimension(500, 500));
+
     }
 
     // --- Setup Methods ---

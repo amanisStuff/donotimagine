@@ -16,5 +16,9 @@ public interface ViewportController {
 
     public void previous();
 
+    public void play();
+
+    public void pause();
+
     public JPanel getPanel();
 }

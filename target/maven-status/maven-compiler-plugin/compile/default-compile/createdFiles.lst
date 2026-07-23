@@ -6,8 +6,10 @@ UI/elements/Controllers/ImageViewportController.class
 UI/elements/ImageScreen.class
 com/mycompany/donotimagine/CounterDowner.class
 UI/elements/Controllers/ViewportController.class
+UI/elements/ImageGallery$AddImageBox$1.class
 UI/elements/ImageGallery.class
 UI/elements/ControlPanel.class
+UI/elements/ImageGallery$AddImageBox.class
 shared/WrapLayout.class
 interfaces/IOHandeling.class
 com/mycompany/donotimagine/DoNotImagine.class

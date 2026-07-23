@@ -11,7 +11,6 @@ public class DoNotImagine {
         // use the ui elements called ControlPanel
         MainWindow mw = new MainWindow();
         mw.setVisible(true);
-
     }
 
 }
