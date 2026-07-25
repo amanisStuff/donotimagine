@@ -37,13 +37,11 @@ public class ImageViewportController implements ViewportController {
         imageGallery.setClickRemoveAction((index) -> {
             removeImage(index);
         });
-        addImageFromWebLink("https://picsum.photos/200/300");
         imageGallery.setClickAddAction(() -> {
             JFileChooser fileChooser = new JFileChooser();
             fileChooser.resetChoosableFileFilters();
             fileChooser.setAcceptAllFileFilterUsed(false);
             FileNameExtensionFilter imageFilter = new FileNameExtensionFilter("Images (*.jpg, *.png)", "jpg", "jpeg", "png");
-
             fileChooser.setFileFilter(imageFilter);
             // 2. Open the file dialog (pass 'null' or your parent component/frame)
             int response = fileChooser.showOpenDialog(null);
@@ -58,6 +56,13 @@ public class ImageViewportController implements ViewportController {
             }
 
         });
+        imageGallery.setWebLinkDropped((url) -> {
+            addImageFromWebLink(url);
+        });
+        imageGallery.setFileDropped((path) -> {
+            addImageFromFilePath(path);
+        });
+
         if (!images.isEmpty()) {
             currentImage = 0;
             imageScreen.setImage(images.get(currentImage));

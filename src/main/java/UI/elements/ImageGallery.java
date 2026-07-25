@@ -41,6 +41,7 @@ public class ImageGallery extends JPanel {
     private Consumer<String> fileDropped = (path) -> {
         System.out.println("path: " + path);
     };
+
     private Runnable clickAddAction = () -> {
         System.out.println("add image actions");
     };
@@ -52,6 +53,14 @@ public class ImageGallery extends JPanel {
     public void setClickAddAction(Runnable clickAddAction) {
         this.clickAddAction = clickAddAction;
         addImageBox.setClickAction(clickAddAction);
+    }
+
+    public void setWebLinkDropped(Consumer<String> webLinkDropped) {
+        this.webLinkDropped = webLinkDropped;
+    }
+
+    public void setFileDropped(Consumer<String> fileDropped) {
+        this.fileDropped = fileDropped;
     }
 
     public void setClickRemoveAction(Consumer<Integer> clickRemoveAction) {
@@ -113,7 +122,6 @@ public class ImageGallery extends JPanel {
                     String htmlContent = (String) event.getTransferable()
                             .getTransferData(DataFlavor.fragmentHtmlFlavor);
                     String url = extractUrl(htmlContent);
-
                     if (url != null && !url.isEmpty()) {
                         webLinkDropped.accept(url);
                         event.dropComplete(true);
@@ -124,7 +132,7 @@ public class ImageGallery extends JPanel {
                     List<File> files = (List<File>) event.getTransferable()
                             .getTransferData(DataFlavor.javaFileListFlavor);
                     for (File file : files) {
-                        String name = file.getName();
+                        String name = file.getAbsolutePath();
                         fileDropped.accept(name);
                     }
                     event.dropComplete(true);
@@ -214,18 +222,20 @@ public class ImageGallery extends JPanel {
             return null;
         }
 
-        // If the dropped content is already a plain URL
-        if (html.strip().startsWith("http://") || html.strip().startsWith("https://")) {
-            return html.strip();
-        }
-
-        // Extract URL from href attribute if it's an HTML anchor tag
-        Pattern pattern = Pattern.compile("href=\"(.*?)\"", Pattern.CASE_INSENSITIVE);
+        // Try to extract URL from the src attribute
+        Pattern pattern = Pattern.compile("src=\"(.*?)\"", Pattern.CASE_INSENSITIVE);
         Matcher matcher = pattern.matcher(html);
         if (matcher.find()) {
-            return matcher.group(1); // Returns the URL inside href
+            return matcher.group(1); // Returns the URL inside src
         }
 
-        return html.strip(); // Fallback
+        // Fallback to href if src isn't found
+        pattern = Pattern.compile("href=\"(.*?)\"", Pattern.CASE_INSENSITIVE);
+        matcher = pattern.matcher(html);
+        if (matcher.find()) {
+            return matcher.group(1);
+        }
+
+        return html.strip(); // Final fallback
     }
 }
