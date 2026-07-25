@@ -9,10 +9,13 @@ import UI.elements.ImageScreen;
 import interfaces.IOHandeling;
 import java.awt.BorderLayout;
 import java.awt.image.BufferedImage;
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.JFileChooser;
 import javax.swing.JPanel;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 /**
  *
@@ -27,16 +30,34 @@ public class ImageViewportController implements ViewportController {
     private JPanel current_view;
 
     public ImageViewportController() {
-        addImageFromWebLink("https://picsum.photos/200/300");
-        addImageFromWebLink("https://picsum.photos/250/300");
-        addImageFromWebLink("https://picsum.photos/250/200");
-        addImageFromWebLink("https://picsum.photos/250/100");
-        addImageFromWebLink("https://picsum.photos/250/200");
 
         current_view = new JPanel(new BorderLayout());
         imageGallery = new ImageGallery(images);
         current_view.add(imageGallery);
+        imageGallery.setClickRemoveAction((index) -> {
+            removeImage(index);
+        });
+        addImageFromWebLink("https://picsum.photos/200/300");
+        imageGallery.setClickAddAction(() -> {
+            JFileChooser fileChooser = new JFileChooser();
+            fileChooser.resetChoosableFileFilters();
+            fileChooser.setAcceptAllFileFilterUsed(false);
+            FileNameExtensionFilter imageFilter = new FileNameExtensionFilter("Images (*.jpg, *.png)", "jpg", "jpeg", "png");
 
+            fileChooser.setFileFilter(imageFilter);
+            // 2. Open the file dialog (pass 'null' or your parent component/frame)
+            int response = fileChooser.showOpenDialog(null);
+            // 3. Check if the user selected a file
+            if (response == JFileChooser.APPROVE_OPTION) {
+                File selectedFile = fileChooser.getSelectedFile();
+                String url = selectedFile.getAbsolutePath();
+                addImageFromFilePath(url);
+                System.out.println("Selected file path: " + selectedFile.getAbsolutePath());
+            } else {
+                System.out.println("File selection was cancelled.");
+            }
+
+        });
         if (!images.isEmpty()) {
             currentImage = 0;
             imageScreen.setImage(images.get(currentImage));
@@ -92,6 +113,8 @@ public class ImageViewportController implements ViewportController {
             currentImage = 0;
             imageScreen.setImage(images.get(currentImage));
         }
+        imageGallery.addImage(newImage);
+        this.current_view.repaint();
     }
 
     public void removeImage(int index) {
@@ -104,6 +127,17 @@ public class ImageViewportController implements ViewportController {
     public void addImageFromWebLink(String url) {
         try {
             BufferedImage newImage = IOHandeling.loadImage(url, IOHandeling.imageOptions.WEB);
+            addImage(newImage);
+        } catch (IOException ex) {
+            System.getLogger(ImageViewportController.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+        } catch (AssertionError ex) {
+            System.getLogger(ImageViewportController.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+        }
+    }
+
+    public void addImageFromFilePath(String url) {
+        try {
+            BufferedImage newImage = IOHandeling.loadImage(url, IOHandeling.imageOptions.SYSTEM);
             addImage(newImage);
         } catch (IOException ex) {
             System.getLogger(ImageViewportController.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);

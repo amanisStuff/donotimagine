@@ -16,18 +16,31 @@ import shared.WrapLayout;
  */
 import javax.swing.*;
 import java.awt.*;
+import java.awt.datatransfer.DataFlavor;
+import java.awt.dnd.DropTarget;
+import java.awt.dnd.DropTargetAdapter;
+import java.awt.dnd.DropTargetDropEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Consumer;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import javax.swing.border.Border;
 
 public class ImageGallery extends JPanel {
 
     private final List<BufferedImage> images = new ArrayList<>();
     private AddImageBox addImageBox = new AddImageBox();
+    private Consumer<String> webLinkDropped = (url) -> {
+        System.out.println("url: " + url);
+    };
+    private Consumer<String> fileDropped = (path) -> {
+        System.out.println("path: " + path);
+    };
     private Runnable clickAddAction = () -> {
         System.out.println("add image actions");
     };
@@ -38,6 +51,7 @@ public class ImageGallery extends JPanel {
 
     public void setClickAddAction(Runnable clickAddAction) {
         this.clickAddAction = clickAddAction;
+        addImageBox.setClickAction(clickAddAction);
     }
 
     public void setClickRemoveAction(Consumer<Integer> clickRemoveAction) {
@@ -48,6 +62,7 @@ public class ImageGallery extends JPanel {
         this.setLayout(new WrapLayout(WrapLayout.LEADING, 8, 8));
         addImageBox.setClickAction(clickAddAction);
         this.add(addImageBox);
+        this.setDropTarget(new DropTarget(this, new CustomDropTargetAdapter()));
     }
 
     public ImageGallery(List<BufferedImage> images) {
@@ -85,6 +100,46 @@ public class ImageGallery extends JPanel {
             // Refresh UI
             refreshUI();
         }
+    }
+
+    private class CustomDropTargetAdapter extends DropTargetAdapter {
+
+        @Override
+        public void drop(DropTargetDropEvent event) {
+            System.out.println("item dropped");
+            try {
+                event.acceptDrop(event.getDropAction());
+                if (event.isDataFlavorSupported(DataFlavor.fragmentHtmlFlavor)) {
+                    String htmlContent = (String) event.getTransferable()
+                            .getTransferData(DataFlavor.fragmentHtmlFlavor);
+                    String url = extractUrl(htmlContent);
+
+                    if (url != null && !url.isEmpty()) {
+                        webLinkDropped.accept(url);
+                        event.dropComplete(true);
+                    } else {
+                        event.dropComplete(false);
+                    }
+                } else if (event.isDataFlavorSupported(DataFlavor.javaFileListFlavor)) {
+                    List<File> files = (List<File>) event.getTransferable()
+                            .getTransferData(DataFlavor.javaFileListFlavor);
+                    for (File file : files) {
+                        String name = file.getName();
+                        fileDropped.accept(name);
+                    }
+                    event.dropComplete(true);
+                } else {
+                    System.out.println("the data type rejected");
+                    event.rejectDrop();
+                }
+            } catch (Exception e) {
+                System.out.println("an error happened" + e.getMessage());
+                e.printStackTrace();
+                event.dropComplete(false);
+            }
+
+        }
+
     }
 
     private void refreshUI() {
@@ -152,5 +207,25 @@ public class ImageGallery extends JPanel {
             }
             );
         }
+    }
+
+    private String extractUrl(String html) {
+        if (html == null) {
+            return null;
+        }
+
+        // If the dropped content is already a plain URL
+        if (html.strip().startsWith("http://") || html.strip().startsWith("https://")) {
+            return html.strip();
+        }
+
+        // Extract URL from href attribute if it's an HTML anchor tag
+        Pattern pattern = Pattern.compile("href=\"(.*?)\"", Pattern.CASE_INSENSITIVE);
+        Matcher matcher = pattern.matcher(html);
+        if (matcher.find()) {
+            return matcher.group(1); // Returns the URL inside href
+        }
+
+        return html.strip(); // Fallback
     }
 }

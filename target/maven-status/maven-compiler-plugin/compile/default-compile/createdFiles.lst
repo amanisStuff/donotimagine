@@ -1,5 +1,6 @@
 UI/elements/ControlPanel$1.class
 UI/elements/ImageGallery$ImageWrapper.class
+UI/elements/ImageGallery$CustomDropTargetAdapter.class
 interfaces/IOHandeling$imageOptions.class
 UI/elements/MainWindow.class
 UI/elements/Controllers/ImageViewportController.class
