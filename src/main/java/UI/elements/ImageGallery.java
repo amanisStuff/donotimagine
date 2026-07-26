@@ -118,11 +118,6 @@ public class ImageGallery extends JPanel {
             System.out.println("item dropped");
             try {
                 event.acceptDrop(event.getDropAction());
-                System.out.println(event.getLocation());
-                System.out.println(event.getCurrentDataFlavors().length + " " + event.getCurrentDataFlavors());
-                System.out.println(event.getTransferable().getClass());
-                System.out.println(event.getTransferable());
-
                 if (event.isDataFlavorSupported(DataFlavor.fragmentHtmlFlavor)) {
                     String htmlContent = (String) event.getTransferable()
                             .getTransferData(DataFlavor.fragmentHtmlFlavor);
@@ -142,22 +137,6 @@ public class ImageGallery extends JPanel {
 
                     }
                     event.dropComplete(true);
-                } else if (event.isDataFlavorSupported(DataFlavor.imageFlavor)) {
-                    System.out.println("so there is an image flavor");
-                    event.dropComplete(false);
-
-                } else if (event.isDataFlavorSupported(DataFlavor.stringFlavor)) {
-                    System.out.println("so there is an str flavor");
-                    event.dropComplete(false);
-
-                } else if (event.isDataFlavorSupported(DataFlavor.selectionHtmlFlavor)) {
-                    System.out.println("so there is an selectionHtmlFlavor flavor");
-                    event.dropComplete(false);
-
-                } else if (event.isDataFlavorSupported(DataFlavor.fragmentHtmlFlavor)) {
-                    System.out.println("so there is an fragmentHtmlFlavor flavor");
-                    event.dropComplete(false);
-
                 } else {
                     System.out.println("the data type rejected");
                     event.dropComplete(false);
