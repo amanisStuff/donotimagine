@@ -94,7 +94,6 @@ public class ImageViewportController implements ViewportController {
             return;
         }
         currentImage = (currentImage + 1) % images.size();
-        System.out.println("currentImage: " + currentImage);
         imageScreen.setImage(images.get(currentImage));
     }
 
@@ -126,6 +125,11 @@ public class ImageViewportController implements ViewportController {
         images.remove(index);
         if (images.isEmpty()) {
             currentImage = -1;
+        }
+        if (currentImage == index) {
+            currentImage = 0;
+            imageScreen.setImage(images.get(currentImage));
+
         }
     }
 
