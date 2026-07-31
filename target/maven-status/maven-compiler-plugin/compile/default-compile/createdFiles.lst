@@ -14,3 +14,4 @@ UI/elements/ImageGallery$AddImageBox.class
 shared/WrapLayout.class
 interfaces/IOHandeling.class
 com/mycompany/donotimagine/DoNotImagine.class
+com/mycompany/donotimagine/ClassModeCounterDowner.class

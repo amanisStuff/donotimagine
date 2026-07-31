@@ -6,6 +6,7 @@ package UI.elements;
 
 import UI.elements.Controllers.ImageViewportController;
 import UI.elements.Controllers.ViewportController;
+import com.mycompany.donotimagine.ClassModeCounterDowner;
 import com.mycompany.donotimagine.CounterDowner;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
@@ -54,7 +55,9 @@ public class MainWindow extends JFrame {
 
     // --- Constructor ---
     public MainWindow() throws HeadlessException {
-        this.counter = new CounterDowner(durationOptions[selectedDurationIndex]);
+        int[] durations = {1, 2, 3, 4};
+        int[] repetitions = {5, 4, 3, 2};
+        this.counter = new ClassModeCounterDowner(durations, repetitions);
         setupControllerLogic();
         setupControlPanelActions();
         this.setLayout(new BorderLayout());

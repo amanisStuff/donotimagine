@@ -74,9 +74,11 @@ public class ImageViewportController implements ViewportController {
 
     @Override
     public void play() {
-        current_view.remove(imageGallery);
-        current_view.add(imageScreen);
-        current_view.repaint();
+        if (!images.isEmpty()) {
+            current_view.remove(imageGallery);
+            current_view.add(imageScreen);
+            current_view.repaint();
+        }
 
     }
 

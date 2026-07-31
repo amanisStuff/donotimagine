@@ -18,11 +18,9 @@ public class CounterDowner {
 
     private final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
     private ScheduledFuture<?> scheduledFuture;
-
     private Runnable endOfCountDownTask;
     private int durationInSeconds;
     private int remainingTimeInSeconds;
-
     private Consumer<Integer> counterTaskConsumer = (remainingTime) -> {
         System.out.println("Time left: " + (remainingTime / 60) + "m " + (remainingTime % 60) + "s");
     };
