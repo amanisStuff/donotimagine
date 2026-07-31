@@ -31,17 +31,20 @@ public class ClassModeCounterDowner extends CounterDowner {
 
     private int addUpRepetition() {
         int sum = 0;
-        for (int i = 0; i < durations.length; i++) {
-            sum = sum + durations[i];
+        for (int i = 0; i < repetitions.length; i++) {
+            sum = sum + repetitions[i];
         }
         return sum;
     }
 
     private int findDurrationindexByRepetitionAndIndex(int index) {
         int tracker = index;
+        System.out.println("tracker: " + tracker);
         for (int i = 0; i < repetitions.length; i++) {
             tracker = tracker - repetitions[i];
             if (tracker < 0) {
+                System.out.println("resulting index: " + i);
+
                 return i;
             }
         }
