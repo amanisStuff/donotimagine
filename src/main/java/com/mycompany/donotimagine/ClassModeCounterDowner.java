@@ -4,52 +4,14 @@
  */
 package com.mycompany.donotimagine;
 
-import java.util.Arrays;
-
 /**
  *
  * @author gool
  */
 public class ClassModeCounterDowner extends CounterDowner {
 
-    private int[] durations = {30, 60, 120, 300};
-    private int[] repetitions = {5, 3, 2, 1};
     private int index = -1;
-
-    public void setClassPerameters(int[] durations, int[] repetitions) {
-        if (durations.length == repetitions.length) {
-            this.durations = durations;
-            this.repetitions = repetitions;
-        } else if (durations.length > repetitions.length) {
-            this.repetitions = repetitions;
-            this.durations = Arrays.copyOfRange(durations, 0, repetitions.length);
-        } else if (durations.length < repetitions.length) {
-            this.durations = durations;
-            this.repetitions = Arrays.copyOfRange(repetitions, 0, durations.length);
-        }
-    }
-
-    private int addUpRepetition() {
-        int sum = 0;
-        for (int i = 0; i < repetitions.length; i++) {
-            sum = sum + repetitions[i];
-        }
-        return sum;
-    }
-
-    private int findDurrationindexByRepetitionAndIndex(int index) {
-        int tracker = index;
-        System.out.println("tracker: " + tracker);
-        for (int i = 0; i < repetitions.length; i++) {
-            tracker = tracker - repetitions[i];
-            if (tracker < 0) {
-                System.out.println("resulting index: " + i);
-
-                return i;
-            }
-        }
-        return 0;
-    }
+    private ClassPeriod classPerriod = new ClassPeriod();
 
     @Override
 
@@ -64,8 +26,8 @@ public class ClassModeCounterDowner extends CounterDowner {
     public void setEndOfCountDownTask(Runnable endOfCountDownTask) {
         super.setEndOfCountDownTask(
                 () -> {
-                    index = (index + 1) % addUpRepetition();
-                    super.setDuration(durations[findDurrationindexByRepetitionAndIndex(index)]);
+                    index = index + 1;
+                    super.setDuration(classPerriod.getDuration(index));
 //                    look for the repetition with the equal or greater value and use it's index to set duration
                     endOfCountDownTask.run();
                 }
@@ -73,13 +35,15 @@ public class ClassModeCounterDowner extends CounterDowner {
 
     }
 
-    private ClassModeCounterDowner(int durationInSeconds) {
-        super(durationInSeconds);
+    public ClassModeCounterDowner(ClassPeriod classPerriod) {
+        super(classPerriod.getDuration(0));
+        setClassPerriod(classPerriod);
+
     }
 
-    public ClassModeCounterDowner(int[] durations, int[] repetitions) {
-        super(durations[0]);
-        setClassPerameters(durations, repetitions);
+    public void setClassPerriod(ClassPeriod classPerriod) {
+
+        this.classPerriod = classPerriod;
     }
 
 }
