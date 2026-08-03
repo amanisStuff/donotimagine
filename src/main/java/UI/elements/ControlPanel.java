@@ -28,6 +28,12 @@ public class ControlPanel extends javax.swing.JPanel {
     };
     private Runnable loadButtonAction = () -> {
     };
+    private Consumer<String> switchModeAction = (label) -> {
+    };
+
+    public void setSwitchModeAction(Consumer<String> switchModeAction) {
+        this.switchModeAction = switchModeAction;
+    }
     private Consumer<Integer> pickDurationOptionAction = (i) -> {
     };
     private String[] durationOptions = {};
@@ -117,11 +123,11 @@ public class ControlPanel extends javax.swing.JPanel {
         prevButton = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         timeLabel = new javax.swing.JLabel();
-        modeButton = new javax.swing.JToggleButton();
         jLabel2 = new javax.swing.JLabel();
         saveButton = new javax.swing.JButton();
         loadButton = new javax.swing.JButton();
         fullscreenButton = new javax.swing.JButton();
+        switchModeButton = new javax.swing.JButton();
 
         jMenu1.setText("File");
         jMenuBar1.add(jMenu1);
@@ -167,8 +173,6 @@ public class ControlPanel extends javax.swing.JPanel {
 
         timeLabel.setText("0m 0s");
 
-        modeButton.setText("mode");
-
         jLabel2.setText("viewport controls");
 
         saveButton.setText("save");
@@ -181,6 +185,9 @@ public class ControlPanel extends javax.swing.JPanel {
         fullscreenButton.setText("⛶");
         fullscreenButton.setToolTipText("fullscreen");
         fullscreenButton.addActionListener(this::fullscreenButtonActionPerformed);
+
+        switchModeButton.setText("Mode");
+        switchModeButton.addActionListener(this::switchModeButtonActionPerformed);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -200,8 +207,8 @@ public class ControlPanel extends javax.swing.JPanel {
                         .addComponent(timeLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(durrationsDropDown, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(modeButton, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(3, 3, 3)
+                        .addComponent(switchModeButton))
                     .addComponent(jScrollPane1)
                     .addComponent(jLabel2)
                     .addGroup(layout.createSequentialGroup()
@@ -217,8 +224,9 @@ public class ControlPanel extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addGap(9, 9, 9)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(modeButton, javax.swing.GroupLayout.DEFAULT_SIZE, 23, Short.MAX_VALUE)
-                    .addComponent(durrationsDropDown, javax.swing.GroupLayout.DEFAULT_SIZE, 23, Short.MAX_VALUE)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(durrationsDropDown, javax.swing.GroupLayout.DEFAULT_SIZE, 23, Short.MAX_VALUE)
+                        .addComponent(switchModeButton))
                     .addComponent(timeLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(progressBar, javax.swing.GroupLayout.PREFERRED_SIZE, 12, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -289,6 +297,12 @@ public class ControlPanel extends javax.swing.JPanel {
         fullscreenButtonAction.run();
     }//GEN-LAST:event_fullscreenButtonActionPerformed
 
+    private void switchModeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_switchModeButtonActionPerformed
+        switchModeAction.andThen((mode) -> {
+            switchModeButton.setText(mode);
+        });
+    }//GEN-LAST:event_switchModeButtonActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JToggleButton countdownMode;
     private javax.swing.JComboBox<String> durrationsDropDown;
@@ -304,12 +318,12 @@ public class ControlPanel extends javax.swing.JPanel {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JButton loadButton;
-    private javax.swing.JToggleButton modeButton;
     private javax.swing.JButton nextButton;
     private javax.swing.JButton playButton;
     private javax.swing.JButton prevButton;
     private javax.swing.JProgressBar progressBar;
     private javax.swing.JButton saveButton;
+    private javax.swing.JButton switchModeButton;
     private javax.swing.JLabel timeLabel;
     // End of variables declaration//GEN-END:variables
 }

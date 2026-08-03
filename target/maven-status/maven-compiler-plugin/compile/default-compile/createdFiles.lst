@@ -3,6 +3,7 @@ UI/elements/ImageGallery$ImageWrapper.class
 UI/elements/ImageGallery$CustomDropTargetAdapter.class
 interfaces/IOHandeling$imageOptions.class
 UI/elements/MainWindow.class
+UI/elements/modes.class
 UI/elements/Controllers/ImageViewportController.class
 UI/elements/ImageScreen.class
 com/mycompany/donotimagine/CounterDowner.class

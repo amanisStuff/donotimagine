@@ -16,6 +16,11 @@ import javax.swing.JFrame;
 import java.util.Arrays;
 import javax.swing.SwingUtilities;
 
+enum modes {
+    classMode,
+    constant
+}
+
 /**
  *
  * @author gool
