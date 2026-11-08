@@ -6,10 +6,6 @@ package UI.elements.Controllers;
 
 import javax.swing.JPanel;
 
-/**
- *
- * @author gool
- */
 public interface ViewportController {
 
     public void next();

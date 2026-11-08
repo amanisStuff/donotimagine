@@ -4,10 +4,6 @@
  */
 package com.mycompany.donotimagine;
 
-/**
- *
- * @author gool
- */
 public class ClassModeCounterDowner extends CounterDowner {
 
     private int index = -1;

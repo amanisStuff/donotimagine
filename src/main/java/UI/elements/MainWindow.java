@@ -16,14 +16,6 @@ import javax.swing.JFrame;
 import java.util.Arrays;
 import javax.swing.SwingUtilities;
 
-/**
- *
- * @author gool
- */
-/**
- *
- * @author gool
- */
 public class MainWindow extends JFrame {
 
     // --- Attributes ---

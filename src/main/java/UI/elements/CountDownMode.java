@@ -6,7 +6,7 @@ package UI.elements;
 
 /**
  *
- * @author gool
+ * @author amani kherraz
  */
 public enum CountDownMode {
     Classic,

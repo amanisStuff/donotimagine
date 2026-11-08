@@ -12,7 +12,7 @@ import shared.WrapLayout;
 
 /**
  *
- * @author gool
+ * @author Amani Kherraz
  */
 import javax.swing.*;
 import java.awt.*;

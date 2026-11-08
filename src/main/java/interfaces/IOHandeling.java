@@ -13,10 +13,6 @@ import java.net.URL;
 
 import javax.imageio.ImageIO;
 
-/**
- *
- * @author amani
- */
 public class IOHandeling {
 
     public static enum imageOptions {

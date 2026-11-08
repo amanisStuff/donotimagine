@@ -6,10 +6,6 @@ package com.mycompany.donotimagine;
 
 import java.util.Arrays;
 
-/**
- *
- * @author gool
- */
 public class ClassPeriod {
 
     private int[] durations = {30, 60, 120, 300};

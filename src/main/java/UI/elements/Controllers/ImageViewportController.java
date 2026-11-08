@@ -17,10 +17,6 @@ import javax.swing.JFileChooser;
 import javax.swing.JPanel;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
-/**
- *
- * @author gool
- */
 public class ImageViewportController implements ViewportController {
 
     private ImageScreen imageScreen = new ImageScreen();

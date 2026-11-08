@@ -10,10 +10,6 @@ import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Consumer;
 
-/**
- *
- * @author gool
- */
 public class CounterDowner {
 
     private final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
