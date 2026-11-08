@@ -4,7 +4,7 @@
  */
 package UI.elements;
 
-import UI.elements.Controllers.ImageViewportController;
+import UI.elements.components.ControlPanel;
 import UI.elements.Controllers.ViewportController;
 import com.mycompany.donotimagine.ClassModeCounterDowner;
 import com.mycompany.donotimagine.ClassPeriod;

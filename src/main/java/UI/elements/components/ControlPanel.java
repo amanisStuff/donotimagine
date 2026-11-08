@@ -2,8 +2,9 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
  */
-package UI.elements;
+package UI.elements.components;
 
+import UI.elements.CountDownMode;
 import java.util.Arrays;
 import java.util.function.Consumer;
 import javax.swing.ComboBoxModel;
@@ -120,6 +121,7 @@ public class ControlPanel extends javax.swing.JPanel {
         jList1 = new javax.swing.JList<>();
         countdownMode = new javax.swing.JToggleButton();
         jCheckBoxMenuItem1 = new javax.swing.JCheckBoxMenuItem();
+        label1 = new java.awt.Label();
         progressBar = new javax.swing.JProgressBar();
         durrationsDropDown = new javax.swing.JComboBox<>();
         playButton = new javax.swing.JButton();
@@ -155,6 +157,8 @@ public class ControlPanel extends javax.swing.JPanel {
 
         jCheckBoxMenuItem1.setSelected(true);
         jCheckBoxMenuItem1.setText("jCheckBoxMenuItem1");
+
+        label1.setText("label1");
 
         setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
@@ -214,8 +218,11 @@ public class ControlPanel extends javax.swing.JPanel {
                         .addGap(3, 3, 3)
                         .addComponent(switchModeButton, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jScrollPane1)
-                    .addComponent(jLabel2)
-                    .addGroup(layout.createSequentialGroup()
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(jLabel2)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(fullscreenButton, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(saveButton, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -240,9 +247,9 @@ public class ControlPanel extends javax.swing.JPanel {
                     .addComponent(nextButton)
                     .addComponent(prevButton))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel2)
+                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 234, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 298, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(saveButton)
@@ -316,6 +323,7 @@ public class ControlPanel extends javax.swing.JPanel {
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+    private java.awt.Label label1;
     private javax.swing.JButton loadButton;
     private javax.swing.JButton nextButton;
     private javax.swing.JButton playButton;
