@@ -14,6 +14,7 @@ public class ClassPeriod {
 
     private int[] durations = {30, 60, 120, 300};
     private int[] repetitions = {5, 3, 2, 1};
+
     public int getTotalTimeSpent() {
         int totalTime = 0;
         for (int i = 0; i < durations.length; i++) {
@@ -21,12 +22,14 @@ public class ClassPeriod {
         }
         return totalTime;
     }
+
     public String getTimeString(int totalSeconds) {
         int hours = totalSeconds / 3600;
         int minutes = (totalSeconds % 3600) / 60;
         int seconds = totalSeconds % 60;
         return String.format("%d-h %d-m %d-s", hours, minutes, seconds);
     }
+
     public String getSummary() {
         StringBuilder summary = new StringBuilder();
         for (int i = 0; i < durations.length; i++) {
@@ -34,6 +37,7 @@ public class ClassPeriod {
         }
         return summary.toString();
     }
+
     public String getPeriodSummary() {
         StringBuilder periodSummary = new StringBuilder();
         for (int i = 0; i < durations.length; i++) {
@@ -41,6 +45,7 @@ public class ClassPeriod {
         }
         return periodSummary.toString();
     }
+
     public void setClassPerameters(int[] durations, int[] repetitions) {
         if (durations.length == repetitions.length) {
             this.durations = durations;

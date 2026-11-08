@@ -4,6 +4,7 @@
  */
 package UI.elements;
 
+import java.util.Arrays;
 import java.util.function.Consumer;
 import javax.swing.ComboBoxModel;
 import javax.swing.DefaultComboBoxModel;
@@ -28,10 +29,11 @@ public class ControlPanel extends javax.swing.JPanel {
     };
     private Runnable loadButtonAction = () -> {
     };
-    private Consumer<String> switchModeAction = (label) -> {
+    private Consumer<CountDownMode> switchModeAction = (label) -> {
     };
+    private CountDownMode mode = CountDownMode.Constant;
 
-    public void setSwitchModeAction(Consumer<String> switchModeAction) {
+    public void setSwitchModeAction(Consumer<CountDownMode> switchModeAction) {
         this.switchModeAction = switchModeAction;
     }
     private Consumer<Integer> pickDurationOptionAction = (i) -> {
@@ -91,11 +93,13 @@ public class ControlPanel extends javax.swing.JPanel {
     /**
      * Creates new form ControlPanel
      */
-    public ControlPanel() {
+    public ControlPanel(CountDownMode countDownMode) {
         initComponents();
         durrationsDropDown.setModel(new DefaultComboBoxModel<>(durationOptions));
         progressBar.setValue(progress);
         timeLabel.setText(timeLabeText);
+        this.mode = countDownMode;
+        switchModeButton.setText(mode.name());
     }
 
     /**
@@ -208,7 +212,7 @@ public class ControlPanel extends javax.swing.JPanel {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(durrationsDropDown, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(3, 3, 3)
-                        .addComponent(switchModeButton))
+                        .addComponent(switchModeButton, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jScrollPane1)
                     .addComponent(jLabel2)
                     .addGroup(layout.createSequentialGroup()
@@ -251,11 +255,9 @@ public class ControlPanel extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void countdownModeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_countdownModeActionPerformed
-        // TODO add your handling code here:
     }//GEN-LAST:event_countdownModeActionPerformed
 
     private void nextButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nextButtonActionPerformed
-        // TODO add your handling code here:
         nextButtonAction.run();
     }//GEN-LAST:event_nextButtonActionPerformed
 
@@ -265,17 +267,14 @@ public class ControlPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_durrationsDropDownActionPerformed
 
     private void saveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveButtonActionPerformed
-        // TODO add your handling code here:
         saveButtonAction.run();
     }//GEN-LAST:event_saveButtonActionPerformed
 
     private void loadButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loadButtonActionPerformed
-        // TODO add your handling code here:
         loadButtonAction.run();
     }//GEN-LAST:event_loadButtonActionPerformed
 
     private void playButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_playButtonActionPerformed
-        // TODO add your handling code here:
         if (playButton.getText().contains("⯈")) {
             playButtonAction.run();
             playButton.setText("⏸");
@@ -287,20 +286,20 @@ public class ControlPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_playButtonActionPerformed
 
     private void prevButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_prevButtonActionPerformed
-        // TODO add your handling code here:
         prevButtonAction.run();
 
     }//GEN-LAST:event_prevButtonActionPerformed
 
     private void fullscreenButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fullscreenButtonActionPerformed
-        // TODO add your handling code here:
         fullscreenButtonAction.run();
     }//GEN-LAST:event_fullscreenButtonActionPerformed
 
     private void switchModeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_switchModeButtonActionPerformed
-        switchModeAction.andThen((mode) -> {
-            switchModeButton.setText(mode);
-        });
+        CountDownMode[] modes = CountDownMode.values();
+        int currentModeIndex = Arrays.binarySearch(modes, mode);
+        mode = modes[(currentModeIndex + 1) % modes.length];
+        switchModeButton.setText(mode.name());
+        switchModeAction.accept(mode);
     }//GEN-LAST:event_switchModeButtonActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

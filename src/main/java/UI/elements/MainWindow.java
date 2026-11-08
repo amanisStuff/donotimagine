@@ -16,11 +16,10 @@ import javax.swing.JFrame;
 import java.util.Arrays;
 import javax.swing.SwingUtilities;
 
-enum modes {
-    classMode,
-    constant
-}
-
+/**
+ *
+ * @author gool
+ */
 /**
  *
  * @author gool
@@ -28,19 +27,27 @@ enum modes {
 public class MainWindow extends JFrame {
 
     // --- Attributes ---
+    private CountDownMode countDownMode = CountDownMode.Constant;
     private final ViewportController viewportController = new ImageViewportController();
-    private final ControlPanel cp = new ControlPanel();
-    private CounterDowner counter; // Now a field so all actions can see it
+    private final ControlPanel cp = new ControlPanel(countDownMode);
+    private CounterDowner counter;
     private int selectedDurationIndex = 0;
-    private final int[] durationOptions = {10, 30, 60, 120, 300};
+
+    // Constant mode duration options
+    private final int[] constantDurationOptions = {10, 30, 60, 120, 300};
+
+    // ClassPeriod preset datasets
     private int[][][] classPeriodTabla = {
         {{30, 60, 300, 600}, {10, 5, 2, 1}},
         {{30, 60, 300, 600, 1500}, {10, 5, 2, 1, 1}},
         {{30, 60, 180, 600, 1500, 2100}, {6, 3, 2, 1, 1, 1}},};
+
     private ClassPeriod[] classPeriods = {
         new ClassPeriod(classPeriodTabla[0][0], classPeriodTabla[0][1]),
         new ClassPeriod(classPeriodTabla[1][0], classPeriodTabla[1][1]),
-        new ClassPeriod(classPeriodTabla[2][0], classPeriodTabla[2][1])};
+        new ClassPeriod(classPeriodTabla[2][0], classPeriodTabla[2][1])
+    };
+
     private boolean isPlaying = false;
 
     // --- Action Attributes ---
@@ -66,22 +73,23 @@ public class MainWindow extends JFrame {
         handleNavigation();
     };
 
-    private void switchToclassMode() {
-    }
-
     // --- Constructor ---
     public MainWindow() throws HeadlessException {
-        int[] durations = {1, 2, 3, 4};
-        int[] repetitions = {5, 4, 3, 2};
-        this.counter = new ClassModeCounterDowner(new ClassPeriod(durations, repetitions));
+        // Initialize with default Constant mode counter
+        this.counter = new CounterDowner(0); // Assuming standard Constant CounterDowner exists, or use your default implementation
+        this.counter.setDuration(constantDurationOptions[selectedDurationIndex]);
+
         setupControllerLogic();
         setupControlPanelActions();
+
         this.setLayout(new BorderLayout());
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.add(cp, BorderLayout.EAST);
         this.add(viewportController.getPanel(), BorderLayout.CENTER);
         this.setMinimumSize(new Dimension(500, 500));
 
+        // Push initial options to control panel based on starting mode
+        updateControlPanelModeUI();
     }
 
     // --- Setup Methods ---
@@ -90,14 +98,51 @@ public class MainWindow extends JFrame {
         cp.setPauseButtonAction(pauseAction);
         cp.setNextButtonAction(nextAction);
         cp.setPrevButtonAction(prevAction);
-        cp.setDurationOptions(durationOptionsText());
-        cp.setTimeLabeText("00m 00s");
-        cp.setPickDurationOptionAction((index) -> {
-            counter.setDuration(durationOptions[index]);
-            this.selectedDurationIndex = index;
+
+        cp.setSwitchModeAction((mode) -> {
+            this.countDownMode = mode;
+            this.selectedDurationIndex = 0; // Reset index on switch
+            counter.stop();
+            isPlaying = false;
+
+            if (countDownMode == CountDownMode.Classic) {
+                counter = new ClassModeCounterDowner(classPeriods[selectedDurationIndex]);
+            } else {
+                counter = new CounterDowner(0);
+                counter.setDuration(constantDurationOptions[selectedDurationIndex]);
+            }
+
+            setupControllerLogic();
+            updateControlPanelModeUI();
+
+            // Reset display view for the new mode
             cp.setProgress(100);
-            cp.setTimeLabeText(DurationToText(durationOptions[index]));
+            cp.setTimeLabeText(DurationToText(getCurrentDurationValue()));
         });
+
+        cp.setPickDurationOptionAction((index) -> {
+            this.selectedDurationIndex = index;
+            counter.stop();
+            isPlaying = false;
+
+            if (countDownMode == CountDownMode.Classic) {
+                counter = new ClassModeCounterDowner(classPeriods[selectedDurationIndex]);
+            } else {
+                counter.setDuration(constantDurationOptions[selectedDurationIndex]);
+            }
+
+            cp.setProgress(100);
+            cp.setTimeLabeText(DurationToText(getCurrentDurationValue()));
+        });
+    }
+
+    private void updateControlPanelModeUI() {
+        if (countDownMode == CountDownMode.Classic) {
+            cp.setDurationOptions(classPeriodOptionsText());
+        } else {
+            cp.setDurationOptions(constantDurationOptionsText());
+        }
+        cp.setTimeLabeText(DurationToText(getCurrentDurationValue()));
     }
 
     private void setupControllerLogic() {
@@ -117,18 +162,36 @@ public class MainWindow extends JFrame {
             counter.start();
         }
         cp.setProgress(100);
-        cp.setTimeLabeText(DurationToText(durationOptions[selectedDurationIndex]));
+        cp.setTimeLabeText(DurationToText(getCurrentDurationValue()));
     }
 
     // --- Helpers ---
-    private String[] durationOptionsText() {
-        return Arrays.stream(durationOptions)
+    private int getCurrentDurationValue() {
+        if (countDownMode == CountDownMode.Classic) {
+            return classPeriods[selectedDurationIndex].getTotalTimeSpent();
+        } else {
+            return constantDurationOptions[selectedDurationIndex];
+        }
+    }
+
+    private String[] constantDurationOptionsText() {
+        return Arrays.stream(constantDurationOptions)
                 .mapToObj(this::DurationToText)
                 .toArray(String[]::new);
     }
 
+    private String[] classPeriodOptionsText() {
+        return Arrays.stream(classPeriods)
+                .map(cpObj -> DurationToText(cpObj.getTotalTimeSpent()))
+                .toArray(String[]::new);
+    }
+
     private int calcProgress(int remainingTime) {
-        return (int) ((float) remainingTime / durationOptions[selectedDurationIndex] * 100);
+        int total = getCurrentDurationValue();
+        if (total == 0) {
+            return 0;
+        }
+        return (int) ((float) remainingTime / total * 100);
     }
 
     private String DurationToText(int duration) {
